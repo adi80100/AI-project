@@ -13,8 +13,6 @@ const App = () => {
     const getUser = async ()=>{
       const data = await getCurrentUser()
       dispatch(setUserData(data))
-
-
     }
     getUser()
   },[])
