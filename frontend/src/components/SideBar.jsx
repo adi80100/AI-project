@@ -13,7 +13,16 @@ const SideBar = () => {
     const [imageError,setImageError] = useState(false)
     const {conversations,selectedConversation} = useSelector((state)=>state.conversation)
     const {userData} = useSelector((state)=>state.user)
+    console.log(userData)
+   
+    const avatarUrl = typeof userData?.avatar === "string" && userData.avatar.trim().length > 0
+                        ? userData.avatar
+                        : null;
 
+
+    useEffect(() => { 
+        setImageError(false) 
+    }, [userData?.avatar]);
 
     useEffect(()=>{
         const getConv =  async()=>{
@@ -65,8 +74,8 @@ const SideBar = () => {
                                 : "bg-transparent border-transparent hover:bg-indigo-500/10 hover:border-indigo-500/[0.18]"
                             }`}
                         >
-                            <div className={`flex items-center justify-center shrink-0 w-[28px] h-[28px] rounded-1g transition-colors duration-150
-                                ${isActive ? " bg-indigo-500/15 text-indigo-400" : " bg-white/[0.05]text-slate-500"}`}>
+                            <div className={`flex items-center justify-center shrink-0 w-[28px] h-[28px] rounded-lg transition-colors duration-150
+                                ${isActive ? " bg-indigo-500/15 text-indigo-400" : "bg-white/[0.05] text-slate-500"}`}>
                                 <MessageSquare size={13} />
                             </div>
                         
@@ -80,15 +89,15 @@ const SideBar = () => {
         </div>
         <div className='relative shrink-0'>
                                 {
-                                    (userData?.avatar && !imageError) ?
+                                    (avatarUrl && !imageError) ?
                                    ( <img 
                                         className='w-9 h-9 rounded-[10px] object-cover border-2 border-indigo-500/25'
-                                        src={userData?.avatar} 
-                                        alt="image"
-                                        onError={()=>{
-                                            console.log("image failed")
-                                            setImageError(true)}
-                                        } />
+                                        src={avatarUrl} 
+                                        alt="profile"
+                                        onError={(e)=>{
+                                            e.currentTarget.onerror = null
+                                            setImageError(true)
+                                        }} />
                                     ): 
                                     (<div 
                                         className='w-9 h-9 rounded-[10px] bg-white/[0.06] flex items-center justify-center'
@@ -160,7 +169,7 @@ const SideBar = () => {
 
                     return (
                         <div 
-                            key={conv._id}
+                            // key={conv._id||i}
                             onClick={()=>dispatch(setSelectedConversation(conv))}
                             className={`group flex items-center gap-2.5 cursor-pointer mb-0.5 px-3 py-2.5 rounded-[10px] border transition-colors duration-150
                             ${
@@ -168,7 +177,7 @@ const SideBar = () => {
                                 : "bg-transparent border-transparent hover:bg-indigo-500/10 hover:border-indigo-500/[0.18]"
                             }`}
                         >
-                        <div className={`flex items-center justify-center shrink-0 w-[28px] h-[28px] rounded-1g transition-colors duration-150
+                        <div className={`flex items-center justify-center shrink-0 w-[28px] h-[28px] rounded-lg transition-colors duration-150
                             ${isActive ? " bg-indigo-500/15 text-indigo-400" : " bg-white/[0.05]text-slate-500"}`}>
                             <MessageSquare size={13} />
                         </div>
@@ -193,20 +202,18 @@ const SideBar = () => {
                     '>
                         <div className='relative shrink-0'>
                                 {
-                                    (userData?.avatar && !imageError) ?
+                                    (avatarUrl && !imageError) ?
                                    ( <img 
                                         className='w-9 h-9 rounded-[10px] object-cover border-2 border-indigo-500/25'
-                                        src={userData?.avatar} 
-                                        alt="image"
-                                        onError={()=>{
-                                            console.log("image failed")
-                                            setImageError(true)}
-                                        } />
+                                        src={avatarUrl} 
+                                        alt="profile"
+                                        onError={(e)=>{
+                                            e.currentTarget.onerror = null
+                                            setImageError(true)
+                                        }} />
                                     ): 
                                     (<div 
-                                        className='w-9 h-9 rounded-[10px] bg-white/[0.06] flex items-center justify-center'
- 
-                                    >
+                                        className='w-9 h-9 rounded-[10px] bg-white/[0.06] flex items-center justify-center'>
                                           <User size={15} className='text-slate-400'/>
                                     </div>)
                                 }

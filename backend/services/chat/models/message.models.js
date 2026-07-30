@@ -6,7 +6,7 @@ const messageSchema = new mongoose.Schema(
             type:mongoose.Schema.Types.ObjectId,
             ref:"Conversation"
         },
-        roll:{
+        role:{
             type:String,
             enum:["user","assistant"]
         },
