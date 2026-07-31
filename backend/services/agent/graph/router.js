@@ -1,64 +1,23 @@
-import { getModel } from "../config/llmmodels.js"
+const searchKeywords = [
+    "search", "news", "latest", "today", "current", "web", "internet", "weather", "stock", "youtube", "github", "time", "clock", "date"
+]
 
-export const router = async (state)=>{
-    const llm = await  getModel("router")
-    const prompt =` You are an agent router.
+export const router = async (state) => {
+    if (state?.agent && state.agent !== "auto") {
+        return {
+            ...state,
+            agent: state.agent
+        }
+    }
 
-Available agents:
--chat
--search
--coding
--pdf
--ppt
--image
-Rules:
+    const prompt = (state?.prompt || "").toLowerCase()
+    const shouldRouteToSearch = searchKeywords.some((keyword) => prompt.includes(keyword))
+       console.log("========== ROUTER ==========");
+    console.log("Prompt:", state.prompt);
+    console.log("Selected Agent:", agent);
 
-chat:
-General conversation,
-explanations,
-learning,
-questions.
-
-search: 
-Current events,
-latest information,
-news,
-recent developments,
-internet lookup.
-
-Coding:
-Generate code,
-debug code,
-build projects,
-architecture,
-API design.
-
-pdf:
-Questions about generate PDFs or document context.
-
-ppt:
-Questions about generate ppts or ppt context.
-
-vision:
-Generate image,
-create  image,
-Return ONLY one word:
-
-chat
-search
-coding
-pdf
-vision
-
-User Query:${state.prompt}
-
-` 
-
-const response = await llm.invoke(prompt)
-console.log(response)
-return {
-    ...state,
-    agent:response.content.trim().toLowerCase()
-}
-
+    return {
+        ...state,
+        agent: shouldRouteToSearch ? "search" : "chat"
+    }
 }

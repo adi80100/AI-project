@@ -1,25 +1,20 @@
-import React from 'react'
-import api from '../api/axios'
+import api from "../api/axios.js";
 
 async function sendMessage(payload) {
   try {
     const body = {
-      prompt: payload?.prompt,
-      conversationId: payload?.conversationId ?? payload?.conversation,
-    }
+      prompt: payload.prompt,
+      conversationId: payload.conversationId,
+      agent: payload.agent,
+    };
 
-    const { data } = await api.post("/api/agent/chat", body)
+    const { data } = await api.post("/api/agent/chat", body);
 
-    if (typeof data === 'string') return data
-    if (data?.content) return data.content
-    if (data?.message) return data.message
-    if (data?.aiResponse) return data.aiResponse
-
-    return ''
+    return data;
   } catch (error) {
-    console.error(error)
-    return ''
+    console.error(error);
+    return null;
   }
 }
 
-export default sendMessage
+export default sendMessage;

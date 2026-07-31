@@ -1,9 +1,14 @@
 import Redis from "ioredis"
 
-const redis = new Redis(process.env.REDIS_URL)
+const redisUrl = process.env.REDIS_URL || "redis://localhost:6379"
+const redis = new Redis(redisUrl)
 
-redis.on("connect",()=>{
+redis.on("connect", () => {
     console.log("redis connected")
 })
 
-export  {redis}
+redis.on("error", (err) => {
+    console.error("redis error:", err.message)
+})
+
+export { redis }

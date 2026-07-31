@@ -17,6 +17,7 @@ const ChatArea = () => {
                 return
             }
 
+            if(selectedConversation.title == "New Chat")return
             const data = await getMessages(selectedConversation._id)
             console.log("API resp:", data);
             dispatch(setMessages(Array.isArray(data) ? data : data?.messages ?? []))
