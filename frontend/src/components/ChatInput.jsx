@@ -47,7 +47,8 @@ if (!conversation) {
         const data = await sendMessage(payload)
 
         if (data) {
-            dispatch(addMessages({ role: "assistant", content: data.answer,images:data.images }))
+           const d= dispatch(addMessages({ role: "assistant", content: data?.answer,images:data?.images }))
+            console.log(d)
         }
         console.log(data)
         setValue("")
