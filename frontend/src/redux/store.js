@@ -9,6 +9,8 @@ export const store = configureStore({
     conversation:conversationsReducer,
     message:messageReducer
   },
+  // enable Redux DevTools in non-production (Vite exposes import.meta.env.MODE)
+  devTools: import.meta.env ? import.meta.env.MODE !== 'production' : true,
 })
 // console.log(store.getState());
 // console.log(conversationsReducer);

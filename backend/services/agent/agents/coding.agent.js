@@ -41,6 +41,10 @@ export const codingAgent = async (state) => {
             -Hover Effects
             -Beautiful spacing
             -Single page unless user asks otherwise.
+            - Use real image URLs from Unsplash.
+            - Do NOT use placeholder images.
+            - Do NOT invent image URLs.
+            - If a suitable image URL cannot be generated, leave the image src empty ("").
 
 
             Return ONLY valid JSON.
@@ -75,12 +79,14 @@ export const codingAgent = async (state) => {
 
         
         const res = await llm.invoke(prompt)
-const cleaned = res.content
+console.log("========== RAW MODEL RESPONSE ==========");
+console.log(res.content);
+console.log("========================================");const cleaned = res.content
   .replace(/^```json\s*/i, "")
   .replace(/^```\s*/i, "")
   .replace(/\s*```$/, "")
   .trim();
-
+     
 console.log(cleaned);
 
 const data = JSON.parse(cleaned);        
@@ -93,7 +99,8 @@ const data = JSON.parse(cleaned);
                 {
                     id:Date.now(),
                     type:"Project",
-                    files:data.files||[]
+                    files:data.files||[],
+                    title:state.prompt
                     
                 }
             ]

@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import sendMessage from '../features/sendMessage.js'
 import { useDispatch, useSelector } from 'react-redux'
 import { getMessages } from '../features/getMessages.js'
-import { addMessages, setMessages } from '../redux/messageSlice.js'
+import { addMessages, setArtifacts, setMessages } from '../redux/messageSlice.js'
 import { createConversation } from '../features/createConversation.js'
 import { addConversation, setConvTitle, setSelectedConversation } from '../redux/conversationSlice.js'
 import { updateConversation } from '../features/updateConversation.js'
@@ -45,8 +45,9 @@ if (!conversation) {
 
         dispatch(addMessages({ role: "user", content: trimmedValue }))
         const data = await sendMessage(payload)
-
+        console.log(data)
         if (data) {
+            dispatch(setArtifacts(data.artifacts||[]))
            const d= dispatch(addMessages({ role: "assistant", content: data?.answer,images:data?.images }))
             console.log(d)
         }
