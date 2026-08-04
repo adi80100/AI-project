@@ -130,6 +130,21 @@ function MessageBubble({role,content,images}) {
                 )
               },
 
+              img:({src})=>{
+                if(!src) return null;
+                return(
+                  <img 
+
+                    src={src} 
+                    onClick={()=>setLightBox(src)}
+                    loading='lazy'
+                    // remove that image which is giving error
+                    onError={(e)=>e.currentTarget.remove()}
+                    className="w-40 h-28 rounded-xl object-cover border border-white/10 cursor-zoom-in hover:opacity-90 transition"
+                    alt="" />
+                )
+              }
+
              }}
              >
                   {content}

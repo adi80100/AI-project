@@ -81,7 +81,8 @@ export const codingAgent = async (state) => {
         const res = await llm.invoke(prompt)
 console.log("========== RAW MODEL RESPONSE ==========");
 console.log(res.content);
-console.log("========================================");const cleaned = res.content
+console.log("========================================");
+const cleaned = res.content
   .replace(/^```json\s*/i, "")
   .replace(/^```\s*/i, "")
   .replace(/\s*```$/, "")

@@ -29,7 +29,8 @@ export const getModel = async(agent)=>{
             return groq;
         case "coding":
             return openRouter;
-        
+        // case "image":
+        //     return groq;
 
         default :
             return groq
