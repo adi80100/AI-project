@@ -2,7 +2,7 @@ import express from "express"
 import dotenv from "dotenv"
 import { connectDB } from "./config/db.js";
 import cors from "cors"
-
+import billingRoute from "./routes/billing.route.js";
 dotenv.config()
 const app = express();
 const port = process.env.PORT||8000
@@ -15,6 +15,7 @@ app.use(cors({
 }))
 
 
+app.use("/",billingRoute)
 
 
 app.get("/",(req,res)=>{
